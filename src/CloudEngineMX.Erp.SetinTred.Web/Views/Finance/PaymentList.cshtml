@@ -1,0 +1,189 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.PaymentViewModel
+@{
+    ViewData["Title"] = "Lista de Pagos";
+    Layout = "_MasterSite";
+}
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Nuevo Pago</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-controller="Finance" asp-action="CreatePayment" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="font-weight-bold" asp-for="PayentDate">Fecha Pago:</label>
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <span class="input-group-text"><i class="icon-calendar22"></i></span>
+                                </span>
+                                <input type="text" asp-for="PayentDate" class="form-control" id="PayentDate" placeholder="Fecha Pago">
+                                <span asp-validation-for="PayentDate" class="text-danger"></span>
+                            </div>
+                            <br/>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="PaymentType">Forma de Pago:</label>
+                                <select asp-for="PaymentType" class="select">
+                                    <option value="@string.Empty">[Selecciona Una Forma de Pago]</option>
+                                    <option value="Efectivo">Efectivo</option>
+                                    <option value="Cheque">Cheque</option>
+                                    <option value="Compensacion">Compensación</option>
+                                    <option value="Devolucion">Devolución</option>
+                                    <option value="Nota de Credito">Nota de Crédito</option>
+                                    <option value="Transferencia Electronica">Transferencia Electronica</option>
+                                </select>
+                                <span asp-validation-for="PaymentType" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="CurrencyKey">Moneda Pago:</label>
+                                <select asp-for="CurrencyKey" asp-items="Model.Currencies" class="select"></select>
+                                <span asp-validation-for="CurrencyKey" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="PurcharseOrderKey">Instrucción De Compra:</label>
+                                <select asp-for="PurcharseOrderKey" asp-items="Model.PurcharOrders" class="select"></select>
+                                <span asp-validation-for="PurcharseOrderKey" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Ammount">Importe del Pago:</label>
+                                <input type="text" asp-for="Ammount" class="form-control" placeholder="Importe">
+                                <span asp-validation-for="Ammount" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Reference">N° Factura:</label>
+                                <input type="text" asp-for="Reference" class="form-control" placeholder="N° Factura">
+                                <span asp-validation-for="Reference" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Remarks">Comentarios:</label>
+                                <textarea asp-for="Remarks" class="form-control"></textarea>
+                                <span asp-validation-for="Remarks" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn bg-success btn-labeled btn-labeled-right">Crear Pago <b><i class="icon-add"></i></b></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="~/global_assets/images/principal.jpg" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Lista de Pagos</h5>
+    </div>
+    <div class="card-body">
+    </div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+            <tr>
+                <th>Fecha Pago</th>
+                <th>Forma de Pago</th>
+                <th>Importe</th>
+                <th>Moneda</th>
+                <th>Instrucción de Compra</th>
+                <th>Proveedor</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Payments)
+            {
+                <tr>
+                    <td>@item.PaymentDate.ToShortDateString()</td>
+                    <td>
+                        @item.PaymentType
+                    </td>
+                    <td>@item.Ammount.ToString("C2")</td>
+                    <td>
+                        @item.CurrencyName
+
+                    </td>
+                    <td>
+                        @item.PurchaseOrderCode
+
+                    </td>
+                    <td>@item.SupplierName</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+@section PageCrumb{
+    <span class="breadcrumb-item">Finanzas</span>
+    <span class="breadcrumb-item">Pagos</span>
+    <span class="breadcrumb-item active">Nuevo Pago</span>
+}
+@section CustomScripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/pickadate/picker.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+
+    <script src="~/js/PaymentList.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+
+
+
+            var date = new Date(Date.now());
+            var pickr = $("#PayentDate").pickadate({
+                setDate: date,
+                monthsFull: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+                weekdaysShort: ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'],
+                formatSubmit: 'dd-mm-yyyy',
+                format: "dd/mm/yyyy",
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 5,
+                editable: true,
+                today: 'Hoy',
+                clear: 'Limpiar',
+                close: 'Cerrar'
+            });
+
+
+            $('#PayentDate').click(function () {
+                pickr.pickadate('open');
+            });
+
+        });
+
+
+    </script>
+}
+

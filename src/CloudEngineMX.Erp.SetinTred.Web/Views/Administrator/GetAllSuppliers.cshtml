@@ -1,0 +1,245 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.SupplierViewModel
+@{
+    ViewData["Title"] = "GetAllSuppliers";
+    Layout = "_MasterSite";
+}
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Nuevo Proveedor</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-controller="Administrator" asp-action="CreateSupplier" method="post">
+                    <input type="hidden" asp-for="SupplierKey"/>
+                    <input type="hidden" asp-for="Action"/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="FiscalName">Razón Social:</label>
+                                <input type="text" asp-for="FiscalName" class="form-control" placeholder="Razón Social">
+                                <span asp-validation-for="FiscalName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Rfc">R.F.C.:</label>
+                                <input type="text" asp-for="Rfc" class="form-control" placeholder="R.F.C.">
+                                <span asp-validation-for="Rfc" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Address">Dirección:</label>
+                                <input type="text" asp-for="Address" class="form-control" placeholder="Dirección">
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Phone">Telefono:</label>
+                                <input type="text" asp-for="Phone" class="form-control" placeholder="Telefono">
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Services">Servicios:</label>
+                                <input type="text" asp-for="Services" class="form-control" placeholder="Servicios">
+                                <span asp-validation-for="Services" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" asp-for="Specification">Especificación:</label>
+                                        <input type="text" asp-for="Specification" class="form-control" placeholder="Especificación">
+                                        <span asp-validation-for="Specification" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                @*<div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" asp-for="SpecificationAvailability">Disponibilidad de la Especificación:</label>
+                                        <input type="text" asp-for="SpecificationAvailability" class="form-control" placeholder="Disponibilidad de la Especificación">
+                                        <span asp-validation-for="SpecificationAvailability" class="text-danger"></span>
+                                    </div>
+                                </div>*@
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" asp-for="OperatingBaseKey">Lugar de Recepcion:</label>
+                                        <select asp-for="OperatingBaseKey" asp-items="Model.OperatingBases" class="select"></select>
+                                        <span asp-validation-for="OperatingBaseKey" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" asp-for="ConfidenceLevelKey">Nivel de Confianza:</label>
+                                        <select asp-for="ConfidenceLevelKey" asp-items="Model.ConfidenceLevels" class="select"></select>
+                                        <span asp-validation-for="ConfidenceLevelKey" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="font-weight-bold" asp-for="NextScheduledEvaluation">Próx. Eval. Programada:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-prepend">
+                                            <span class="input-group-text"><i class="icon-calendar22"></i></span>
+                                        </span>
+                                        <input type="text" asp-for="NextScheduledEvaluation" class="form-control" id="NextScheduledEvaluation" placeholder="Próx. Eval. Programada">
+                                        <span asp-validation-for="NextScheduledEvaluation" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" asp-for="IsCritical">Es Critico?:</label>
+                                        <input type="checkbox" asp-for="IsCritical" id="IsCritical" value="true" class="form-check-input-styled" />
+                                        <span asp-validation-for="IsCritical" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Remarks">Observaciones:</label>
+                                <textarea asp-for="Remarks" class="form-control"></textarea>
+                                <span asp-validation-for="Remarks" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn bg-success btn-labeled btn-labeled-right">@Model.Action Proveedor <b><i class="icon-add"></i></b></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="~/global_assets/images/principal.jpg" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Lista de Proveedores</h5>
+    </div>
+    <div class="card-body">
+    </div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+            <tr>
+                <th>Razón Social</th>
+                <th>Citicidad</th>
+                <th>Servicios</th>
+                <th>Especificación</th>
+                <th>Disponibilidad <br /> Especificación</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SupplierViewModels)
+            {
+                <tr>
+                    <td>@item.FiscalName</td>
+                    <td>
+                        @if (item.IsCritical)
+                        {
+                            <span class="badge badge-warning">Critico</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-success">No Critico</span>
+                        }
+                    </td>
+                    <td>@item.Services</td>
+                    <td>
+                        @item.Specification
+
+                    </td>
+                    <td>@item.SpecificationAvailability</td>
+                    <td class="text-center">
+                        <div class="list-icons">
+                            <div class="dropdown">
+                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                    <i class="icon-menu9"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a asp-controller="Administrator" asp-action="DetailSupplier" asp-route-id="@item.SupplierKey" class="dropdown-item"><i class="icon-pencil7"></i> Editar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+@section PageCrumb{
+    <span class="breadcrumb-item">Administracion</span>
+    <span class="breadcrumb-item active">Proveedores</span>
+}
+@section CustomScripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/pickadate/picker.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+
+    <script src="~/js/SupplierList.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+            var date = new Date(Date.now());
+            var pickr = $("#NextScheduledEvaluation").pickadate({
+                monthsFull: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+                weekdaysShort: ['dom','lun', 'mar', 'mie', 'jue', 'vie', 'sab'],
+                formatSubmit: 'dd-mm-yyyy',
+                format:"dd/mm/yyyy",
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 5,
+                editable: true,
+                today: 'Hoy',
+                clear: 'Limpiar',
+                close: 'Cerrar'
+            });
+
+
+            $('#NextScheduledEvaluation').click(function() {
+                pickr.pickadate('open');
+            });
+
+        });
+
+        $('.form-check-input-styled').uniform();
+
+        $('#IsCritical').change(function () {
+            if ($(this).is(':checked')) {
+                $('#RequiredQuote').val(true);
+            }
+            else {
+                $('#RequiredQuote').val(false);
+            }
+        });
+
+    </script>
+}

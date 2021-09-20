@@ -1,0 +1,123 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.OperatingBaseViewModel
+@{
+    ViewData["Title"] = "Bases de Operación";
+    Layout = "_MasterSite";
+}
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Nueva Base Operativa</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-controller="Administrator" asp-action="CreateBase" method="post">
+                    <input type="hidden" asp-for="Key" />
+                    <input type="hidden" asp-for="Action" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="OperatingBaseName">Nombre Base Operativa:</label>
+                                <input type="text" asp-for="OperatingBaseName" class="form-control" placeholder="Nombre Base Operativa">
+                                <span asp-validation-for="OperatingBaseName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn bg-success btn-labeled btn-labeled-right">@Model.Action Base Operativa <b><i class="icon-add"></i></b></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="~/global_assets/images/principal.jpg" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Lista de Bases Operativas</h5>
+    </div>
+    <div class="card-body">
+    </div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+            <tr>
+                <th>Nombre Area</th>
+                <th>Estatus</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OperatingBaseViewModels)
+            {
+                <tr>
+                    <td>@item.OperatingBaseName</td>
+                    <td>
+                        @if (item.IsActive)
+                        {
+                            <span class="badge badge-success">Activo</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-light">Inactivo</span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        <div class="list-icons">
+                            <div class="dropdown">
+                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                    <i class="icon-menu9"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a asp-controller="Administrator" asp-action="EditBase" asp-route-id="@item.Key" class="dropdown-item"><i class="icon-pencil7"></i> Editar</a>
+                                    @if (@item.IsActive)
+                                    {
+                                        <a asp-controller="Administrator" asp-action="DesactiveBase" asp-route-id="@item.Key" class="dropdown-item"><i class="icon-database-remove"></i> Desactivar</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Administrator" asp-action="DesactiveBase" asp-route-id="@item.Key" class="dropdown-item"><i class="icon-database-check"></i> Activar</a>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+@section PageCrumb{
+    <span class="breadcrumb-item">Administración</span>
+    <span class="breadcrumb-item active">Bases Operativas</span>
+}
+@section CustomScripts{
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+    <script src="~/global_assets/js/plugins/forms/styling/uniform.min.js"></script>
+    <script src="~/global_assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script src="~/js/OperatingBaseList.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+        });
+    </script>
+}
+
+

@@ -1,0 +1,150 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.PrintCustomerQuoteDetailViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PrintQuote</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <img src="~/global_assets/images/Logo-Setin-Tred.png" />
+                </td>
+                <td>
+                    <h1>Cotización</h1>
+                    <table>
+                        <tr>
+                            <td colspan="3">
+                                @Model.QuoteCode
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Día</td>
+                            <td>Mes</td>
+                            <td>Año</td>
+                        </tr>
+                        <tr>
+                            <td>@Model.CreationDate.Day</td>
+                            <td>@Model.CreationDate.ToString("MMMM")</td>
+                            <td>@Model.CreationDate.Year</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <strong>"Lider Nacional en Mantenimiento y Control Superficial de Pozos"</strong>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <table>
+            <tr></tr>
+            <tr>
+                <td>Nombre Comrecial | Razón Social</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Teléfono | Correo:</td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td>Contacto:</td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td>Dirección:</td>
+                <td colspan="2"></td>
+            </tr>
+            <tr class="bg-grey-300 text-black-50">
+                <td colspan="3"><strong>Requerimientos del producto establecidos por el cliente</strong></td>
+
+            </tr>
+            <tr>
+                <td>Datos Técnicos | Operativos</td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td>Documentación Legal</td>
+                <td colspan="2"></td>
+            </tr>
+            <tr class="bg-grey-300 text-black-50">
+                <td colspan="3"><strong>Requerimientos del producto establecidos por el cliente</strong></td>
+
+            </tr>
+            <tr>
+                <td>Datos Normativos:</td>
+                <td></td>
+                <td><strong>Moneda</strong></td>
+            </tr>
+            <tr>
+                <td>Estándares de fabricación:</td>
+                <td></td>
+                <td>MXN <input type="checkbox" /></td>
+            </tr>
+            <tr>
+                <td>Procesos de calidad:</td>
+                <td></td>
+                <td>USD <input type="checkbox" /></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>Partida</td>
+                    <td>Cantidad</td>
+                    <td>Unidad</td>
+                    <td>Descripción</td>
+                    <td>Disponibilidad</td>
+                    <td>Precio Unitario</td>
+                    <td>Importe</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                @foreach (var item in Model.Items)
+                {
+                    <td>@item.Consecutive</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Unit</td>
+                    <td>@item.Description</td>
+                    <td>@item.Availability</td>
+                    <td>@item.UnitPrice.ToString("C2")</td>
+                    <td>@item.SubTotal.ToString("C2")</td>
+                }
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3"></td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>Elaboró</td>
+                            <td>Validó</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </td>
+                <td></td>
+                <td>Total</td>
+                <td>@Model.Items.Sum(x=>x.SubTotal).ToString("C2")</td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+</html>

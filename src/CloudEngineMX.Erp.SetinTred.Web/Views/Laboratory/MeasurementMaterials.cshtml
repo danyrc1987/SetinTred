@@ -1,0 +1,96 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.MeasurementMaterialViewModel
+@{
+    ViewData["Title"] = "Materiales de Laboratorio";
+    Layout = "_MasterSite";
+}
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Lista de Materiales de Medición</h5>
+    </div>
+    <div class="card-body">
+    </div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+            <tr>
+                <th>Fabricante</th>
+                <th>Nombre Material</th>
+                <th>Piezas en Stock</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Materials)
+            {
+                <tr>
+                    <td>@item.ManufacturerName</td>
+                    <td>@item.MaterialName</td>
+                    <td>@item.Total</td>
+                    <td class="text-center">
+                        <div class="list-icons">
+                            <div class="dropdown">
+                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                    <i class="icon-menu9"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a data-id="@item.MaterialKey" data-name="@item.MaterialKey" class="dropdown-item viewInventory"><i class="icon-file-text"></i> Detalles</a>
+                                    @*<a class="dropdown-item viewInventory" data-id="@item.MaterialKey" data-name="@item.MaterialKey"><i class="icon-airplane2"></i> Solicitar Avión</a>*@
+                                    @*<a asp-controller="Purchases" asp-action="SendToWareHouse" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-file-check"></i> Aprobar</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="positionFormModel" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5 class="modal-title"></h5>
+            </div>
+
+            <div class="modal-body">
+                <div id="positionFormModelDiv"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PageCrumb{
+    <span class="breadcrumb-item">Laboratorio</span>
+    <span class="breadcrumb-item active">Materiales de Medición</span>
+}
+@section CustomScripts{
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+
+    <script src="~/js/MaterialsList.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+            $(".viewInventory").click(function() {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var url = "/Laboratory/InventoryToMaterial/" + id;
+                debugger;
+                $("#positionFormModelDiv").load(url,
+                    function() {
+                        $("#positionFormModel").modal("show");
+                    });
+            });
+        });
+    </script>
+}
+
+

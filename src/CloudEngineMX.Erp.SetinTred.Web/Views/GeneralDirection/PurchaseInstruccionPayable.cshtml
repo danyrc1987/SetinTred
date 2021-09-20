@@ -1,0 +1,193 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.ReportsToPayViewModel
+@{
+    ViewData["Title"] = "Intrucciones Pendientes de Pago";
+    Layout = "~/Views/Shared/_MasterSite.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-top-info border-bottom-info rounded-0">
+            <div class="card-header">
+                <h6 class="card-title"><span class="font-weight-semibold">Numerologia</span></h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card card-body bg-setin has-bg-image">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h3 class="mb-0">@Model.TotalPesos.ToString("C2")</h3>
+                                    <span class="text-uppercase font-size-xs">Total Pagos MXN</span>
+                                </div>
+
+                                <div class="ml-3 align-self-center">
+                                    <i class="icon-coins icon-3x opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card card-body bg-setin has-bg-image">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h3 class="mb-0">@Model.TotalUsd.ToString("C2")</h3>
+                                    <span class="text-uppercase font-size-xs">Total Pagos USD</span>
+                                </div>
+
+                                <div class="ml-3 align-self-center">
+                                    <i class="icon-coin-dollar icon-3x opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card card-body bg-setin has-bg-image">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h3 class="mb-0">@Model.Pays.Count</h3>
+                                    <span class="text-uppercase font-size-xs">Total Pagos </span>
+                                </div>
+
+                                <div class="ml-3 align-self-center">
+                                    <i class="icon-wallet icon-3x opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card card-body bg-setin has-bg-image">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h3 class="mb-0">@Model.Pays.Average(x => x.Amount).ToString("C2")</h3>
+                                    <span class="text-uppercase font-size-xs">Pago Promedio</span>
+                                </div>
+
+                                <div class="ml-3 align-self-center">
+                                    <i class="icon-stats-growth icon-3x opacity-75"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card border-top-info border-bottom-info rounded-0">
+            <div class="card-header header-elements-inline">
+                <h6 class="card-title">Detalle Por Proveedor</h6>
+                <div class="header-elements">
+                    <div class="btn-group">
+                        <button class="btn bg-setin btn-icon"><i class="icon-file-download2"></i></button>
+                        <button class="btn bg-setin dropdown-toggle" data-toggle="dropdown"></button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a asp-controller="GeneralDirection" asp-action="DownGeneralReport" class="dropdown-item">Reporte General</a>
+                            <a asp-controller="GeneralDirection" asp-action="DownReportDetail" class="dropdown-item">Reporte Detallado</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-tabs-solid nav-justified bg-light">
+                    <li class="nav-item"><a href="#solid-bordered-justified-tab1" class="nav-link active" data-toggle="tab">Pagos a Proveedores en Pesos</a></li>
+                    <li class="nav-item"><a href="#solid-bordered-justified-tab2" class="nav-link" data-toggle="tab">Pagos a Proveedores en Dolares</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="solid-bordered-justified-tab1">
+                        <table class="table table-hover datatable-responsive table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Proveedor</th>
+                                    <th>Solicitante</th>
+                                    <th>Moneda</th>
+                                    <th>IMporte</th>
+                                    <th class="text-center">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Pays.Where(x => x.CurrencyName.Equals("PESOS")))
+                                {
+                                    <tr>
+                                        <td>@item.FiscalName</td>
+                                        <td>@item.Applicant</td>
+                                        <td>@item.CurrencyName</td>
+                                        <td>@item.Amount.ToString("C2")</td>
+                                        <td class="text-center">
+                                            <div class="list-icons">
+                                                <div class="dropdown">
+                                                    <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                                        <i class="icon-menu9"></i>
+                                                    </a>
+
+                                                    <div class="dropdown-menu dropdown-menu-right">
+
+                                                        <a asp-controller="GeneralDirection" asp-action="DetailSupplier" asp-route-id="@item.SupplierKey" class="dropdown-item"><i class="icon-file-text2"></i> Detalles</a>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane fade" id="solid-bordered-justified-tab2">
+                        <table class="table table-hover datatable-responsive table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Proveedor</th>
+                                    <th>Solicitante</th>
+                                    <th>Moneda</th>
+                                    <th>IMporte</th>
+                                    <th class="text-center">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Pays.Where(x => x.CurrencyName.Equals("DOLARES")))
+                                {
+                                    <tr>
+                                        <td>@item.FiscalName</td>
+                                        <td>@item.Applicant</td>
+                                        <td>@item.CurrencyName</td>
+                                        <td>@item.Amount.ToString("C2")</td>
+                                        <td class="text-center">
+                                            <div class="list-icons">
+                                                <div class="dropdown">
+                                                    <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                                        <i class="icon-menu9"></i>
+                                                    </a>
+
+                                                    <div class="dropdown-menu dropdown-menu-right">
+
+                                                        <a asp-controller="GeneralDirection" asp-action="DetailSupplier" asp-route-id="@item.SupplierKey" class="dropdown-item"><i class="icon-file-text2"></i> Detalles</a>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PageCrumb{
+    <span class="breadcrumb-item">Dirección General</span>
+    <span class="breadcrumb-item active">Instrucciones de Compra</span>
+}
+@section CustomScripts{
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+
+    <script src="~/js/ReportToPay.js"></script>
+}
+
+

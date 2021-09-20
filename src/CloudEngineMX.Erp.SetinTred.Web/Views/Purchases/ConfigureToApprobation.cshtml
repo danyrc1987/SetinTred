@@ -1,0 +1,231 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.RequisitionDetailViewModel
+@{
+    ViewData["Title"] = "Detalles Requisicion";
+    Layout = "_MasterSite";
+}
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title font-weight-bold">Detalle Requisición: @Model.Requisition.RequisitionCode</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Solicitante:</label>
+                            <input type="text" asp-for="Requisition.UserName" class="form-control" placeholder="Fecha Requsicion" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold" asp-for="@Model.Requisition.AreaName">Área:</label>
+                            <input type="text" asp-for="Requisition.AreaName" class="form-control" placeholder="Fecha Requsicion" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold" asp-for="@Model.Requisition.OperatingBaseName">Base Operativa:</label>
+                            <input type="text" asp-for="Requisition.OperatingBaseName" class="form-control" placeholder="Fecha Requsicion" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold" asp-for="@Model.Requisition.Classification">Clasificación:</label>
+                            <input type="text" asp-for="Requisition.Classification" class="form-control" placeholder="Fecha Requsicion" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold" asp-for="@Model.Requisition.Application">Aplicación:</label>
+                            <input type="text" asp-for="Requisition.Application" class="form-control" placeholder="Aplicación" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold" asp-for="@Model.Requisition.KeyDescription">Descripción Clave:</label>
+                            <textarea asp-for="Requisition.KeyDescription" class="form-control" disabled="disabled"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="~/global_assets/images/principal.jpg" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title font-weight-bold">Materiales de Requisición</h5>
+        <div class="header-elements">
+            <div class="btn-group">
+                <button type="button" class="btn bg-setin btn-icon"><i class="icon-googleplus5"></i>   &nbsp;Cotizaciones</button>
+                <button type="button" class="btn bg-setin dropdown-toggle" data-toggle="dropdown"></button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item addQuotation" data-id="@Model.Requisition.RequisitionKey" data-name="@Model.Requisition.RequisitionKey"><i class="icon-file-upload"></i> Agregar Cotización</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body"></div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+        <tr>
+            <th>Consecutivo</th>
+            <th>Cantidad a <br/> Comprar </th>
+            <th>Unidad</th>
+            <th>Descripción</th>
+            <th>Especificación</th>
+            <th>Revisión</th>
+            <th class="text-center">Despachado</th>
+            <th class="text-center">Urgente</th>
+            <th class="text-center">Compra</th>
+
+
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Items.Where(x=>x.QuantityToBuy > 0))
+        {
+            <tr>
+                <td>@item.Consecutive</td>
+                <td>@item.QuantityToBuy</td>
+                <td>@item.MeasurementUnit</td>
+                <td>@item.Description</td>
+                <td>@item.Specification</td>
+                <td>@item.Review</td>
+                <td class="text-center">
+                    @if (item.IsDispatched)
+                    {
+                        <i class="icon-checkbox-checked2"></i>
+                    }
+                    else
+                    {
+                        <i class="icon-checkbox-unchecked2"></i>
+                    }
+                </td>
+                <td class="text-center">
+                    @if (item.IsUrgent)
+                    {
+                        <i class="icon-checkbox-checked2"></i>
+                    }
+                    else
+                    {
+                        <i class="icon-checkbox-unchecked2"></i>
+                    }
+                </td>
+                <td class="text-center">
+                    @if (item.IsApproved)
+                    {
+                        <i class="icon-checkbox-checked2"></i>
+                    }
+                    else
+                    {
+                        <i class="icon-checkbox-unchecked2"></i>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="card-footer">
+        <div class="col-md-12 text-right">
+            @*<a asp-controller="Purchases" asp-action="GetApprover" asp-route-id="@Model.Requisition.RequisitionKey" class="btn bg-success btn-labeled btn-labeled-right"> Enviar a Almacén <b><i class="icon-add"></i></b></a>*@
+            <a asp-controller="Purchases" asp-action="GetApproveToPurchase" asp-route-id="@Model.Requisition.RequisitionKey" asp-route-control="1" class="btn bg-success btn-labeled btn-labeled-right"> Solicitar Aprobación David P. <b><i class="icon-user-check"></i></b></a>
+            <a asp-controller="Purchases" asp-action="GetApproveToPurchase" asp-route-id="@Model.Requisition.RequisitionKey" asp-route-control="2" class="btn bg-success btn-labeled btn-labeled-right"> Solicitar Aprobación Alejandro P. <b><i class="icon-user-check"></i></b></a>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title font-weight-bold">Cotizaciones Relacionadas</h5>
+    </div>
+    <div class="card-body"></div>
+    <table class="table table-hover datatable-responsive-quotes">
+        <thead>
+        <tr>
+            <th>Nombre Documento</th>
+            <th class="text-center">Opciones</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Quotations)
+        {
+            <tr>
+                <td>@item.FileName</td>
+                <td class="text-center">
+                    <div class="list-icons">
+                        <div class="dropdown">
+                            <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                <i class="icon-menu9"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="@Url.Content(item.RouteFile)" target="_blank"  class="dropdown-item"><i class="icon-file-download"></i> Descargar Archivo</a>
+                                <a asp-controller="Purchases" asp-action="DeleteDocumentToRequisition" asp-route-id="@item.QuotationKey" asp-route-requisition="@Model.Requisition.RequisitionKey"  class="dropdown-item"><i class="icon-cancel-square"></i> Eliminar Archivo</a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="quotationFormModel" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Cotización</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div id="quotationFormModelDiv"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section CustomScripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript" src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+
+    <script src="~/js/RequisitionDetailUser.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+            $(".addQuotation").click(function() {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var url = "/Purchases/AddQuotationToRequisition/" + id;
+                debugger;
+                $("#quotationFormModelDiv").load(url, function () {
+                    $("#quotationFormModel").modal("show");
+                });
+            });
+        });
+    </script>
+}
+
+

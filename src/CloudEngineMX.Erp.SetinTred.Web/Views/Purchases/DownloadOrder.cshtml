@@ -1,0 +1,141 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.PurchaseOrderViewModel
+@{
+    Layout = null;
+}
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-3">
+            <img src="~/global_assets/images/Logo-Setin-Tred.png" style="width: 100%; max-width: 300px;" />
+        </div>
+        <div class="col-sm-3 offset-sm-6">
+            <p class="font-weight-bold h4 text-center">Folio / Item PO #</p>
+            <p class="font-weight-bold text-center">@Model.PurchaseOrderCode</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <p class="font-weight-bold h4 text-center">ORDEN DE COMPRA / PURCHASE ORDER</p>
+        </div>
+        <div class="col-sm-3">
+            <p class="font-weight-bold text-center">Requisición / Request #</p>
+            <p class="font-weight-bold text-center">@Model.RequisitionCode</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <strong>Proveedor / Supplier:</strong> @Model.SupplierName<br>
+            <strong>Fecha / Date:</strong> @DateTime.Now.ToShortDateString()<br>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-sm-6">
+            <strong>Condiciones / Sales conditions:</strong> @Model.Condition<br>
+            <strong>L.A.B / F.O.B.</strong><br>
+            <p>Revisión y pago de facturas los lunes / Checking and payment of invoices only on Monday</p>
+        </div>
+        <div class="col-sm-4 offset-sm-2">
+            <strong>Enviar a / Send to:</strong> @Model.SendTo<br>
+        </div>
+    </div>
+    <table class="table my-3">
+        <thead>
+        <tr>
+            <th scope="col">Part / Item</th>
+            <th scope="col">Cant / Qty</th>
+            <th scope="col">Unidad / Unit</th>
+            <th scope="col">Parte / Part #</th>
+            <th scope="col" class="text-center">Descripción / Description</th>
+            <th scope="col">Precio Unitario / Unit Price</th>
+            <th scope="col">Importe / Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var item in Model.Details)
+        {
+            <tr>
+                <th scope="row">
+                    @item.Consecutive
+                </th>
+                <td>
+                    @item.Quantity
+                </td>
+                <td>
+                    @item.Unit
+                </td>
+                <td>
+                    @item.PartNumber
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td class="text-right">
+                    @item.UnitPrice.ToString("#,##0.00")
+                </td>
+                <td class="text-right">
+                    @item.TotalLine.ToString("#,##0.00")
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="row my-4">
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-5 border-bottom border-dark pb-4">
+                    <p class="text-center">Elaborado por / Managed by</p>
+                </div>
+                <div class="col-sm-5 offset-sm-2 border-bottom border-dark pb-4">
+                    <p class="text-center">Autorizó / Authorized by</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5">
+                    <p class="text-center">@Model.Applicant</p>
+                </div>
+                <div class="col-sm-5">
+                    <p class="text-center"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-7 border-right border-dark">
+                    <p class="text-right">SUBTOTAL / sub-total:</p>
+                </div>
+                <div class="col-sm-5">
+                    <p class="text-right">@Model.Details.Sum(i => i.TotalLine).ToString("#,##0.00")</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-7 border-right border-dark">
+                    <p class="text-right">IVA / tax:</p>
+                </div>
+                <div class="col-sm-5">
+                    <p class="text-right">@((Model.Details.Sum(i => i.TotalLine) * .16M).ToString("#,##0.00"))</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-7 border-right border-dark">
+                    <p class="text-right">TOTAL / total:</p>
+                </div>
+                <div class="col-sm-5">
+                    <p class="text-right">@((Model.Details.Sum(i => i.TotalLine) * 1.16M).ToString("#,##0.00"))</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

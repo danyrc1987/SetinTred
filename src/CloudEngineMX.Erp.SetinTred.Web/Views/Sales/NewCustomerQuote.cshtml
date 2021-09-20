@@ -1,0 +1,184 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.NewCustomerQuoteViewModel
+@{
+    ViewData["Title"] = "Nueva Cotizacion";
+    Layout = "_MasterSite";
+}
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Nueva Cotización</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-controller="Sales" asp-action="CreateCustomerQuote" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold">Fecha Cotización:</label>
+                                <input type="text" class="form-control" placeholder="Fecha Requsicion" value="@DateTime.Now" disabled="disabled">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="CustomerId">Cliente:</label>
+                                <select asp-for="CustomerId" asp-items="Model.Customers" class="select"></select>
+                                <span asp-validation-for="CustomerId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="CurrencyKey">Moneda:</label>
+                                <select asp-for="CurrencyKey" asp-items="Model.Currencies" class="select"></select>
+                                <span asp-validation-for="CurrencyKey" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="QuoteType">Tipo de Cotización:</label>
+                                <select asp-for="QuoteType" class="select">
+                                    <option value="@string.Empty">[Selecciona una Opción]</option>
+                                    <option value="Productos">Productos</option>
+                                    <option value="Servicios">Servicios</option>
+                                    <option value="Renta">Renta</option>
+                                    <option value="Mixta">Mixta</option>
+                                </select>
+                                <span asp-validation-for="QuoteType" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="PaymentType">Tipo de Pago:</label>
+                                <select asp-for="PaymentType" class="select">
+                                    <option value="@string.Empty">[Selecciona una Opción]</option>
+                                    <option value="Contado">Contado</option>
+                                    <option value="50% anticipo / 50% entrega">50% anticipo / 50% entrega</option>
+                                    <option value="40% anticipo / 60% entrega">40% anticipo / 60% entrega</option>
+                                    <option value="Crédito 30 Días">Crédito 30 Días</option>
+                                    <option value="Crédito 60 Días">Crédito 60 Días</option>
+                                    <option value="Crédito 90 Días">Crédito 90 Días</option>
+                                </select>
+                                <span asp-validation-for="QuoteType" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="TechnicalData">Datos Técnicos | Operativos:</label>
+                                <input type="text" asp-for="TechnicalData" class="form-control" placeholder="Datos Técnicos">
+                                <span asp-validation-for="TechnicalData" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="LegalDocumentation">Documentación Legal:</label>
+                                <input type="text" asp-for="LegalDocumentation" class="form-control" placeholder="Documentación Legal">
+                                <span asp-validation-for="LegalDocumentation" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="NormativeData">Datos Normativos:</label>
+                                <select asp-for="NormativeData" class="select">
+                                    <option value="@string.Empty">[Selecciona Una Opcion]</option>
+                                    <option value="API 6A">API 6A</option>
+                                    <option value="API 16A">API 16A</option>
+                                    <option value="API 16C">API 16C</option>
+                                    <option value="API 7-1">API 7-1</option>
+                                    <option value="Varios">Varios</option>
+                                </select>
+                                <span asp-validation-for="NormativeData" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="ManufacturingStandard">Estándares de fabricación:</label>
+                                <select asp-for="ManufacturingStandard" class="select">
+                                    <option value="@string.Empty">[Selecciona Una Opcion]</option>
+                                    <option value="API 6A">API 6A</option>
+                                    <option value="API 16A">API 16A</option>
+                                    <option value="API 16C">API 16C</option>
+                                    <option value="API 7-1">API 7-1</option>
+                                    <option value="Varios">Varios</option>
+                                </select>
+                                <span asp-validation-for="ManufacturingStandard" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="QualityProcess">Procesos de Calidad:</label>
+                                <input type="text" asp-for="QualityProcess" class="form-control" placeholder="Procesos de Calidad">
+                                <span asp-validation-for="QualityProcess" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Warranty">Garantía:</label>
+                                <input type="text" asp-for="Warranty" class="form-control" placeholder="Garantía">
+                                <span asp-validation-for="Warranty" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="DeliveryTime">Tiempo de Entrega:</label>
+                                <input type="text" asp-for="DeliveryTime" class="form-control" placeholder="Tiempo de Entrega">
+                                <span asp-validation-for="DeliveryTime" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Lab">L.A.B.:</label>
+                                <input type="text" asp-for="Lab" class="form-control" placeholder="L.A.B.">
+                                <span asp-validation-for="Lab" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn bg-success btn-labeled btn-labeled-right">Crear Cotizacion <b><i class="icon-add"></i></b></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="~/global_assets/images/principal.jpg" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PageCrumb{
+    <span class="breadcrumb-item">Ventas</span>
+    <span class="breadcrumb-item active">Nueva Cotización</span>
+}
+@section CustomScripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/pickadate/picker.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+
+    <script src="~/js/RequsitionsList.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+        });
+
+
+
+    </script>
+}
+
+

@@ -1,0 +1,19 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.RequisitionDetailItemViewModel
+<div class="col-md-12">
+    <form method="post" asp-controller="Warehouse" asp-action="DispatchItem">
+        <input type="hidden" asp-for="DetailKey" />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="font-weight-bold" asp-for="Quantity">Cantidad Disponible:</label>
+                    <input type="text" asp-for="Quantity" class="form-control" placeholder="Cantidad">
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="col-md-12 text-right">
+                <button type="submit" id="btnSubmit" class="btn bg-setin btn-labeled btn-labeled-right">Agregar Material <b><i class="icon-add"></i></b></button>
+            </div>
+        </div>
+    </form>
+</div>

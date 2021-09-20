@@ -1,0 +1,137 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.RequisitionDetailViewModel
+@{
+    ViewData["Title"] = "Aprobar Requisición";
+    Layout = "_MasterSite";
+}
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title font-weight-bold">Detalle Requisición: @Model.Requisition.RequisitionCode</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Solicitante:</label>
+                            <input type="text" asp-for="Requisition.UserName" class="form-control" placeholder="Fecha Requsicion" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold" asp-for="@Model.Requisition.AreaName">Área:</label>
+                            <input type="text" asp-for="Requisition.AreaName" class="form-control" placeholder="Fecha Requsicion" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold" asp-for="@Model.Requisition.OperatingBaseName">Base Operativa:</label>
+                            <input type="text" asp-for="Requisition.OperatingBaseName" class="form-control" placeholder="Fecha Requsicion" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold" asp-for="@Model.Requisition.Classification">Clasificación:</label>
+                            <input type="text" asp-for="Requisition.Classification" class="form-control" placeholder="Fecha Requsicion" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold" asp-for="@Model.Requisition.Application">Aplicación:</label>
+                            <input type="text" asp-for="Requisition.Application" class="form-control" placeholder="Aplicación" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold" asp-for="@Model.Requisition.KeyDescription">Descripción Clave:</label>
+                            @*<input type="text" asp-for="Requisition.KeyDescription" class="form-control" placeholder="Aplicación" disabled="disabled">*@
+                            <textarea asp-for="Requisition.KeyDescription" class="form-control" disabled="disabled"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="~/global_assets/images/principal.jpg" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title font-weight-bold">Materiales de Requisición</h5>
+    </div>
+    <div class="card-body"></div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+            <tr>
+                <th>Consecutivo</th>
+                <th>Cantidad</th>
+                <th>Unidad</th>
+                <th>Descripción</th>
+                <th>Especificación</th>
+                <th>Revisión</th>
+                <th class="text-center">Opciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items.Where(x=>x.IsApproved))
+            {
+                <tr>
+                    <td>@item.Consecutive</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.MeasurementUnit</td>
+                    <td>@item.Description</td>
+                    <td>@item.Specification</td>
+                    <td>@item.Review</td>
+                    <td class="text-center">
+                        <div class="list-icons">
+                            <div class="dropdown">
+                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                    <i class="icon-menu9"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a asp-controller="Purchases" asp-action="RejectItem" asp-route-id="@item.DetailKey" class="dropdown-item"><i class="icon-cancel-circle2"></i> Rechazar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="card-footer">
+        <div class="col-md-12 text-right">
+            <a asp-controller="Purchases" asp-action="SendToWareHouse" asp-route-id="@Model.Requisition.RequisitionKey" class="btn bg-success btn-labeled btn-labeled-right"> Aprobar Requisición <b><i class="icon-checkmark4"></i></b></a>
+        </div>
+    </div>
+</div>
+@section CustomScripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript" src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+
+    <script src="~/js/RequisitionDetailUser.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+        });
+    </script>
+}

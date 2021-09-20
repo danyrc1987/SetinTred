@@ -1,0 +1,76 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.ItemViewModel
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-controller="Purchases" asp-action="CreateItem">
+            <input type="hidden" asp-for="RequisitionKey" />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="Quantity">Cantidad:</label>
+                        <input type="text" asp-for="Quantity" class="form-control" placeholder="Cantidad">
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="Measure">Unidad:</label>
+                        <select asp-for="Measure" class="select">
+                            <option value="Pieza">Pieza</option>
+                            <option value="Litro">Litro</option>
+                            <option value="Kilo">Kilo</option>
+                            <option value="Servicio">Servicio</option>
+                            <option value="Juego">Juego</option>
+                        </select>
+                        <span asp-validation-for="Measure" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="Description">Descripción:</label>
+                        <input type="text" asp-for="Description" class="form-control" placeholder="Descripcion">
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="SpecificationKey">Especificación:</label>
+                        <select asp-for="SpecificationKey" asp-items="Model.Specifications" class="select"></select>
+                        <span asp-validation-for="SpecificationKey" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="IsUrgent">Es Urgente?:</label>
+                        <input type="checkbox" asp-for="IsUrgent" id="IsUrgent" value="true" class="form-check-input-styled" />
+                        <span asp-validation-for="IsUrgent" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-12 text-right">
+                    <button type="submit" id="btnSubmit" class="btn bg-setin btn-labeled btn-labeled-right">Agregar Material <b><i class="icon-add"></i></b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".select").select2({
+            tags: true,
+            tokenSeparators: [',']
+        });
+
+        $('.form-check-input-styled').uniform();
+
+        $('#IsAdministrator').change(function () {
+            if ($(this).is(':checked')) {
+                $('#IsAdministrator').val(true);
+            }
+            else {
+                $('#IsAdministrator').val(false);
+            }
+        });
+    });
+</script>

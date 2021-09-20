@@ -1,0 +1,107 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.EditCustomerQuoteItemViewModel
+@{
+    ViewData["Title"] = "Agregar Item a Cotización";
+    Layout = "_MasterSite";
+}
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Agregar Item</h5>
+    </div>
+    <div class="card-body">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="post" asp-controller="Sales" asp-action="EditItemQuote">
+                        <input type="hidden" asp-for="QuoteKey" />
+                        <input type="hidden" asp-for="ItemKey" />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="Quantity">Cantidad:</label>
+                                    <input type="text" asp-for="Quantity" class="form-control" placeholder="Cantidad">
+                                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="TypeItem">Tipo de Item:</label>
+                                    <select asp-for="TypeItem" class="select">
+                                        <option value="@string.Empty">[Selecciona Una Opcion]</option>
+                                        <option value="Producto">Producto</option>
+                                        <option value="Servicio">Servicio</option>
+                                    </select>
+                                    <span asp-validation-for="Unit" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="Unit">Unidad:</label>
+                                    <select asp-for="Unit" class="select">
+                                        <option value="@string.Empty">[Selecciona Una Opcion]</option>
+                                        <option value="Pieza">Pieza</option>
+                                        <option value="Litro">Litro</option>
+                                        <option value="Kilo">Kilo</option>
+                                        <option value="Servicio">Servicio</option>
+                                        <option value="Juego">Juego</option>
+                                    </select>
+                                    <span asp-validation-for="Unit" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="Description">Descripción:</label>
+                                    <input type="text" asp-for="Description" class="form-control" placeholder="Descripcion">
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="Availability">Disponibilidad:</label>
+                                    <input type="text" asp-for="Availability" class="form-control" placeholder="Disponibilidad">
+                                    <span asp-validation-for="Availability" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="UnitPrice">Precio Unitario:</label>
+                                    <input type="text" asp-for="UnitPrice" class="form-control" placeholder="Precio Unitario">
+                                    <span asp-validation-for="UnitPrice" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="Scope">Alcance:</label>
+                                    <textarea asp-for="Scope" class="form-control" rows="20"></textarea>
+                                    <span asp-validation-for="Scope" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="Scope">Notas:</label>
+                                    <textarea asp-for="Remarks" class="form-control" rows="20"></textarea>
+                                    <span asp-validation-for="Remarks" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="col-md-12 text-right">
+                                <button type="submit" id="btnSubmit" class="btn bg-setin btn-labeled btn-labeled-right">Editar Item <b><i class="icon-add"></i></b></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".select").select2({
+            tags: true,
+            tokenSeparators: [',']
+        });
+
+    });
+</script>
