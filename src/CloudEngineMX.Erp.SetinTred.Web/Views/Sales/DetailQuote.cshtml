@@ -1,0 +1,182 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.CustomerQuoteDetailViewModel
+@{
+    ViewData["Title"] = "Detalle Cotización";
+    Layout = "_MasterSite";
+}
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Detalle Cotizacion: @Model.QuoteCode, Creada por: @Model.VendorName</h5>
+    </div>
+    <div class="card-body">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Codigo Cotización:</label>
+                        <input type="text" class="form-control" asp-for="QuoteCode" disabled="disabled">
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="CustomerName">Cliente:</label>
+                        <input type="text" asp-for="CustomerName" class="form-control" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Moneda:</label>
+                        <input type="text" asp-for="CurrencyName" class="form-control" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Tipo de Cotización:</label>
+                        <input type="text" asp-for="QuoteType" class="form-control" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Metodo de Pago:</label>
+                            <input type="text" asp-for="PaymentType" class="form-control" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Vigencia:</label>
+                        <input type="text" asp-for="Validity" class="form-control" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="TechnicalData">Datos Técnicos | Operativos:</label>
+                        <input type="text" asp-for="TechnicalData" class="form-control" placeholder="Datos Técnicos" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="LegalDocumentation">Documentación Legal:</label>
+                        <input type="text" asp-for="LegalDocumentation" class="form-control" placeholder="Documentación Legal" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="NormativeData">Datos Normativos:</label>
+                        <input type="text" asp-for="NormativeData" class="form-control" placeholder="Datos Normativos" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="ManufacturingStandard">Estándares de fabricación:</label>
+                        <input type="text" asp-for="ManufacturingStandard" class="form-control" placeholder="Estándares de fabricación" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="QualityProcess">Procesos de Calidad:</label>
+                        <input type="text" asp-for="QualityProcess" class="form-control" placeholder="Procesos de Calidad" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="Warranty">Garantía:</label>
+                        <input type="text" asp-for="Warranty" class="form-control" placeholder="Garantía" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="DeliveryTime">Tiempo de Entrega:</label>
+                        <input type="text" asp-for="DeliveryTime" class="form-control" placeholder="Tiempo de Entrega" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold">L.A.B.:</label>
+                        <input type="text" asp-for="Lab" class="form-control" disabled="disabled">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.Items.Any())
+{
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title font-weight-bold">Detalle Cotización</h5>
+            @*<div class="header-elements">
+                <div class="btn-group">
+                    <a title="Enviar a Aprobación" href="javascript:void(0)" data-toggle="modal" data-target="#aproveDialog" class="btn bg-setin btn-icon sendApprove" data-id="@Model.QuoteKey" data-name="@Model.QuoteKey"><i class="icon-paperplane"></i>   &nbsp;Enviar a Aprobación</a>
+                </div>
+            </div>*@
+        </div>
+        <div class="card-body"></div>
+        <table class="table table-hover datatable-responsive">
+            <thead>
+                <tr>
+                    <th>Partida</th>
+                    <th>Cantidad</th>
+                    <th>Unidad</th>
+                    <th>Descripcion</th>
+                    <th>Disponibilidad</th>
+                    <th>Alcance</th>
+                    <th>Notas</th>
+                    <th>Precio Unitario</th>
+                    <th>Importe</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.Consecutive</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Unit</td>
+                        <td>@item.Description</td>
+                        <td>@item.Availability</td>
+                        <td>@item.Scope</td>
+                        <td>@item.Remarks</td>
+                        <td>@item.UnitPrice</td>
+                        <td>@item.SubTotal.ToString("C2")</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="9" class="text-right">
+                        <strong>Gran Total: @Model.Items.Sum(x => x.SubTotal).ToString("C2")</strong>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+}
+@section PageCrumb{
+    <span class="breadcrumb-item">Ventas</span>
+    <span class="breadcrumb-item">Cotizaciones</span>
+    <span class="breadcrumb-item active">Detalle Cotización</span>
+}
+@section CustomScripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+
+    <script src="~/js/DetailIQuote .js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+                    });
+
+
+
+    </script>
+}

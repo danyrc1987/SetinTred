@@ -1,0 +1,146 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.NewCustomerViewModel
+@{
+    ViewData["Title"] = "Nuevo Cliente";
+    Layout = "_MasterSite";
+}
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Nuevo Cliente</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form asp-controller="Sales" asp-action="CreateCustomer" method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="SocialName">Nombre Comercial:</label>
+                                <input type="text" asp-for="SocialName" class="form-control" placeholder="Razón Social" required="required">
+                                <span asp-validation-for="SocialName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="FiscalName">Razón Social:</label>
+                                <input type="text" asp-for="FiscalName" class="form-control" placeholder="Razón Social" required="required">
+                                <span asp-validation-for="FiscalName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Rfc">R.F.C.:</label>
+                                <input type="text" asp-for="Rfc" class="form-control" placeholder="R.F.C." required="required">
+                                <span asp-validation-for="Rfc" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Email">Email de Contacto:</label>
+                                <input type="text" asp-for="Email" class="form-control" placeholder="Dirección" required="required">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="PhoneNumber">Telefono de Contacto:</label>
+                                <input type="text" asp-for="PhoneNumber" class="form-control" placeholder="Telefono" required="required">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="PersonType">Tipo de Persona:</label>
+                                <select asp-for="PersonType" class="select" required="required">
+                                    <option value="@string.Empty">[Selecciona una Opcion]</option>
+                                    <option value="Fisica">Fisica</option>
+                                    <option value="Moral">Moral</option>
+                                </select>
+                                <span asp-validation-for="PersonType" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Address">Dirección:</label>
+                                <textarea class="form-control" asp-for="Address"></textarea>
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="AdministrativeContactName">Contacto Administrativo:</label>
+                                <input type="text" asp-for="AdministrativeContactName" class="form-control" placeholder="Contacto Administrativo" required="required">
+                                <span asp-validation-for="AdministrativeContactName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="AdministrativeContactPhone">Telefono Administrativo:</label>
+                                <input type="text" asp-for="AdministrativeContactPhone" class="form-control" placeholder="Telefono Administrativo" required="required">
+                                <span asp-validation-for="AdministrativeContactPhone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="AdministrativeContactEmail">Email Administrativo:</label>
+                                <input type="text" asp-for="AdministrativeContactEmail" class="form-control" placeholder="Email Administrativo" required="required">
+                                <span asp-validation-for="AdministrativeContactEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="FinancialContactName">Contacto Financiero:</label>
+                                <input type="text" asp-for="FinancialContactName" class="form-control" placeholder="Contacto Financiero" required="required">
+                                <span asp-validation-for="FinancialContactName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="FinancialContactPhone">Telefono Financiero:</label>
+                                <input type="text" asp-for="FinancialContactPhone" class="form-control" placeholder="Telefono Financiero" required="required">
+                                <span asp-validation-for="FinancialContactPhone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="FinancialContactEmail">Email Financiero:</label>
+                                <input type="text" asp-for="FinancialContactEmail" class="form-control" placeholder="Email Financiero" required="required">
+                                <span asp-validation-for="FinancialContactEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn bg-success btn-labeled btn-labeled-right">Crear Cliente <b><i class="icon-add"></i></b></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section PageCrumb{
+    <span class="breadcrumb-item">Ventas</span>
+    <span class="breadcrumb-item">Clientes</span>
+    <span class="breadcrumb-item active">Nuevo Cliente</span>
+}
+@section CustomScripts{
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+    <script src="~/js/UserList.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+        });
+
+    </script>
+}
+
+

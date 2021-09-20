@@ -1,0 +1,201 @@
+
+
+    <ul class="nav nav-sidebar" data-nav-type="accordion" id="principal-menu">
+
+        <!-- Main -->
+        <li class="nav-item-header mt-0"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
+        <li class="nav-item">
+            <a href="@Url.Action("Index","Home")" class="nav-link active">
+                <i class="icon-home4"></i>
+                <span>
+                    Dashboard
+                    <span class="d-block font-weight-normal opacity-50">No active orders</span>
+                </span>
+            </a>
+        </li>
+        @if (User.IsInRole("Administrator"))
+        {
+            <li class="nav-item nav-item-submenu">
+                <a href="#" class="nav-link"><i class="icon-server"></i> <span>Administración</span></a>
+
+                <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                    <li class="nav-item"><a asp-controller="Administrator" asp-action="UserList" class="nav-link">Usuarios</a></li>
+                    <li class="nav-item"><a asp-controller="Administrator" asp-action="AreaList" class="nav-link">Areas</a></li>
+                    <li class="nav-item"><a asp-controller="Administrator" asp-action="GetAllSuppliers" class="nav-link">Proveedores</a></li>
+                    <li class="nav-item"><a asp-controller="Administrator" asp-action="OperatingBaseList" class="nav-link">Bases Operativas</a></li>
+                    <li class="nav-item"><a asp-controller="Administrator" asp-action="CostCenterList" class="nav-link">Centros de Costos</a></li>
+                    <li class="nav-item"><a asp-controller="Administrator" asp-action="ConfidenceLevelList" class="nav-link">Nivel de Confianza</a></li>
+                    <li class="nav-item"><a asp-controller="Administrator" asp-action="SpecificationTypesList" class="nav-link">Tipo de Especificación</a></li>
+
+                </ul>
+            </li>
+            <li class="nav-item nav-item-submenu">
+                <a href="@Url.Action("Index","GeneralDirection")" class="nav-link"><i class="icon-office"></i> <span>Alta Gerencia</span></a>
+
+                <ul class="nav nav-group-sub" data-submenu-title="Themes">
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="icon-user-check"></i> Autorizaciones</a>
+                        <ul class="nav nav-group-sub">
+                            <li class="nav-item"><a href="@Url.Action("RequisitionList","GeneralDirection")" class="nav-link">Requisición de Compra</a></li>
+                            <li class="nav-item"><a href="@Url.Action("PurchaseOrderList","GeneralDirection")" class="nav-link">Instrucción de Compra</a></li>
+                            <li class="nav-item"><a href="@Url.Action("CustomerQuotesList","GeneralDirection")" class="nav-link">Cotizaciones</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="icon-cash3"></i> Pagos</a>
+                        <ul class="nav nav-group-sub">
+                            <li class="nav-item"><a href="@Url.Action("PurchaseInstruccionPayable","GeneralDirection")" class="nav-link">I.C. Por Pagar</a></li>
+                            <li class="nav-item"><a href="@Url.Action("PaidPurchaseInstruction","GeneralDirection")" class="nav-link disabled">I.C. Pagadas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="icon-wallet"></i> Ingresos</a>
+                        <ul class="nav nav-group-sub">
+                            <li class="nav-item"><a href="@Url.Action("CustomerQuotesListApprove","GeneralDirection")" class="nav-link">Cotizaciones Validadas</a></li>
+                            <li class="nav-item"><a href="@Url.Action("RequisitionList","GeneralDirection")" class="nav-link disabled">Ordenes de Trabajo</a></li>
+                            <li class="nav-item"><a href="@Url.Action("PurchaseOrderList","GeneralDirection")" class="nav-link disabled">Facturas</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        }
+
+
+        <li class="nav-item nav-item-submenu">
+            <a href="@Url.Action("Index","Purchases")" class="nav-link"><i class="icon-cart5"></i> <span>Compras</span></a>
+
+            <ul class="nav nav-group-sub" data-submenu-title="Themes">
+                <li class="nav-item nav-item-submenu">
+                    <a href="#" class="nav-link"><i class="icon-file-presentation"></i> Requisiciones de Compra</a>
+                    <ul class="nav nav-group-sub">
+                        <li class="nav-item"><a href="@Url.Action("RequisitionList", "Purchases")" class="nav-link">Requisiciones</a></li>
+                        <li class="nav-item"><a href="@Url.Action("RequisitionListPending", "Purchases")" class="nav-link">Pendientes de Aprobacion</a></li>
+                        <li class="nav-item"><a href="@Url.Action("RequisitionListCancel", "Purchases")" class="nav-link">Canceladas y Rechazadas</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item nav-item-submenu">
+                    <a href="#" class="nav-link"><i class="icon-bag"></i> Instrucciones  de Compra</a>
+                    <ul class="nav nav-group-sub">
+                        <li class="nav-item"><a href="@Url.Action("PurchaseOrderList", "Purchases")" class="nav-link">Instrucción de Compra</a></li>
+                        <li class="nav-item"><a href="@Url.Action("PurchaseOrderListPending", "Purchases")" class="nav-link">Pendientes de Aprobacion</a></li>
+                        <li class="nav-item"><a href="@Url.Action("PurchaseOrderListCancel", "Purchases")" class="nav-link">Canceladas y Rechazadas</a></li>
+                        <li class="nav-item"><a href="@Url.Action("PurchaseOrderListApprove", "Purchases")" class="nav-link">Aprobadas</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a asp-controller="Administrator" asp-action="GetAllSuppliers" class="nav-link">Alta Proveedores </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">LPA </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Evaluación Proveedores </a></li>
+
+            </ul>
+        </li>
+        <li class="nav-item nav-item-submenu">
+            <a href="@Url.Action("Index","Sales")" class="nav-link"><i class="icon-cash3"></i> <span>Ventas y Servicio</span></a>
+
+            <ul class="nav nav-group-sub" data-submenu-title="Themes">
+                <li class="nav-item"><a asp-controller="Sales" asp-action="CustomerList" class="nav-link">Clientes</a></li>
+                <li class="nav-item"><a asp-controller="Sales" asp-action="CustomerQuotesList" class="nav-link">Cotizaciones</a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Satisfacción Cliente </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Zona Sur </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Zona Norte </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Zona Centro </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Zona Marina </a></li>
+
+            </ul>
+        </li>
+        <li class="nav-item nav-item-submenu">
+            <a href="@Url.Action("Index","Purchases")" class="nav-link"><i class="icon-users4"></i> <span>Recursos Humanos</span></a>
+
+            <ul class="nav nav-group-sub" data-submenu-title="Themes">
+                <li class="nav-item"><a href="#" class="nav-link disabled">Solicitud de Personal </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Capacitación </a></li>
+            </ul>
+        </li>
+        <li class="nav-item nav-item-submenu">
+            <a href="@Url.Action("Index","Purchases")" class="nav-link"><i class="icon-design"></i> <span>Ingeniería de Producto</span></a>
+
+            <ul class="nav nav-group-sub" data-submenu-title="Themes">
+                <li class="nav-item"><a href="#" class="nav-link disabled">Ordenes de Trabajo </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Rutas de Fabricación </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Alta de Numero de Parte </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Control de Dibujos </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Especificaciones</a></li>
+
+            </ul>
+        </li>
+        <li class="nav-item nav-item-submenu">
+            <a href="@Url.Action("Index","Purchases")" class="nav-link"><i class="icon-thumbs-up3"></i> <span>QHSE</span></a>
+
+            <ul class="nav nav-group-sub" data-submenu-title="Themes">
+                <li class="nav-item"><a href="#" class="nav-link disabled">Manual de Calidad </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Procedimientos </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Formatos </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Normas </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Acciones Correctivas </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Acciones Preventivas </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">NC </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Calidad </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">PND </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Propiedad de Cliente </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Listas Maestras </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Revisiones Gerenciales </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Auditorias </a></li>
+
+            </ul>
+        </li>
+        <li class="nav-item nav-item-submenu">
+            <a href="@Url.Action("Index","Purchases")" class="nav-link"><i class="icon-lab"></i> <span>Laboratorio</span></a>
+
+            <ul class="nav nav-group-sub" data-submenu-title="Themes">
+                <li class="nav-item"><a asp-action="MeasurementMaterials" asp-controller="Laboratory" class="nav-link">Instrumentos de Medición </a></li>
+                <li class="nav-item"><a asp-action="RequestMaterial" asp-controller="Laboratory" class="nav-link">Solicitud de Material</a></li>
+
+                <li class="nav-item"><a href="#" class="nav-link disabled">Estadísticas </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Certificados de Calidad </a></li>
+
+            </ul>
+        </li>
+        <li class="nav-item nav-item-submenu">
+            <a href="@Url.Action("Index","Purchases")" class="nav-link"><i class="icon-lock"></i> <span>Seguridad</span></a>
+
+            <ul class="nav nav-group-sub" data-submenu-title="Themes">
+                @*<li class="nav-item"><a href="#" class="nav-link disabled">LPA </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Alta Proveedores </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Evaluación Proveedores </a></li>*@
+
+            </ul>
+        </li>
+        <li class="nav-item nav-item-submenu">
+            <a href="@Url.Action("Index","Warehouse")" class="nav-link"><i class="icon-home7"></i> <span>Almacén</span></a>
+
+            <ul class="nav nav-group-sub" data-submenu-title="Themes">
+                <li class="nav-item"><a asp-controller="Warehouse" asp-action="RequisitionListToSend" class="nav-link">Validar Requisiciones </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Soldadura </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Materia Prima </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Producto Terminado </a></li>
+
+            </ul>
+        </li>
+        <li class="nav-item nav-item-submenu">
+            <a href="@Url.Action("Index","Purchases")" class="nav-link"><i class="icon-hammer-wrench"></i> <span>Producción</span></a>
+
+            <ul class="nav nav-group-sub" data-submenu-title="Themes">
+                <li class="nav-item"><a href="#" class="nav-link disabled">Tiempo Extra de Oper. </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Carga de Trabajo </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Estatus Equipos </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Lista de Programas de CNC </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Ordenes de Producción </a></li>
+
+            </ul>
+        </li>
+        <li class="nav-item nav-item-submenu">
+            <a href="@Url.Action("Index","Finance")" class="nav-link"><i class="icon-file-stats"></i> <span>Finanzas</span></a>
+
+            <ul class="nav nav-group-sub" data-submenu-title="Themes">
+                <li class="nav-item"><a asp-controller="Finance" asp-action="PaymentList" class="nav-link">Reporte De Pagos </a></li>
+                <li class="nav-item"><a asp-controller="Finance" asp-action="OrderToPayment" class="nav-link disabled">I.C. Pendientes de Pago </a></li>
+                <li class="nav-item"><a asp-controller="Finance" asp-action="PaymentList" class="nav-link disabled">Documentación Proveedores </a></li>
+                <li class="nav-item"><a href="#" class="nav-link disabled">Inventario </a></li>
+            </ul>
+        </li>
+
+    </ul>

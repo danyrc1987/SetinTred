@@ -1,0 +1,109 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.CustomerQuotesViewModel
+@{
+    ViewData["Title"] = "Lista de Cotizaciones";
+    Layout = "_MasterSite";
+}
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title font-weight-bold">Lista de Cotizaciones</h5>
+        <div class="header-elements">
+            <div class="btn-group">
+                <a title="Crear Cotizacion" asp-controller="Sales" asp-action="NewCustomerQuote" class="btn bg-setin btn-icon"><i class="icon-googleplus5"></i>   &nbsp;Nueva Cotización</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body"></div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+            <tr>
+                <th>Codigo Cotización</th>
+                <th>Fecha de Creación</th>
+                <th>Cliente</th>
+                <th>Moneda</th>
+                <th>Tipo de Cotización</th>
+                <th>Forma de Pago</th>
+                <th>Total De Items</th>
+                <th>Subtotal</th>
+                <th>Estatus</th>
+                <th class="text-center">Opciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Quotes)
+            {
+                <tr>
+                    <td>@item.QuoteCode</td>
+                    <td>@item.CreationDate</td>
+                    <td>@item.CustomerName</td>
+                    <td>@item.CurrencyName</td>
+                    <td>@item.QuoteType</td>
+                    <td>@item.PaymentType</td>
+                    <td>@item.TotalItems</td>
+                    <td>@item.Subtotal.ToString("C2")</td>
+                    <td>@item.Status</td>
+                    <td class="text-center">
+                        <div class="list-icons">
+                            <div class="dropdown">
+                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                    <i class="icon-menu9"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    @if (item.Status.Equals("Creación"))
+                                    {
+                                        <a asp-controller="Sales" asp-action="AddItemsQuote" asp-route-id="@item.QuoteKey" class="dropdown-item"><i class="icon-user-check"></i> Configurar Cotización</a>
+                                    }
+                                    else if (item.Status.Equals("Rechazada por G1"))
+                                    {
+                                        <a asp-controller="Sales" asp-action="DetailQuote" asp-route-id="@item.QuoteKey" class="dropdown-item"><i class="icon-file-text2"></i> Detalle Cotización</a>
+                                    }
+                                    else if (item.Status.Equals("Aprobada por G1"))
+                                    {
+                                        <a asp-controller="Sales" asp-action="DetailQuote" asp-route-id="@item.QuoteKey" class="dropdown-item"><i class="icon-file-text2"></i> Detalle Cotización</a>
+                                        <a asp-controller="Sales" asp-action="PrintQuote" asp-route-id="@item.QuoteKey" class="dropdown-item disabled"><i class="icon-printer2"></i> Imprimir Cotización</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Sales" asp-action="DetailQuote" asp-route-id="@item.QuoteKey" class="dropdown-item"><i class="icon-file-text2"></i> Detalle Cotización</a>
+                                        <a asp-controller="Sales" asp-action="EditQuote" asp-route-id="@item.QuoteKey" class="dropdown-item"><i class="icon-pencil7"></i> Editar Cotización</a>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+@section PageCrumb{
+    <span class="breadcrumb-item">Ventas</span>
+    <span class="breadcrumb-item active">Cotizaciones</span>
+}
+@section CustomScripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/pickadate/picker.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+
+    <script src="~/js/CustomerQuotesList.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+        });
+
+    </script>
+}
+
+
+
+

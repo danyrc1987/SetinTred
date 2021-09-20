@@ -1,0 +1,90 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.NewPurchaseOrderViewModel
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-controller="Purchases" asp-action="CreatePurchaseOrder">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="RequisitionCode">Requisición:</label>
+                        <select asp-for="RequisitionCode" asp-items="Model.Requisitions" class="select"></select>
+                        <span asp-validation-for="RequisitionCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="SupplierName">Proveedor:</label>
+                        <select asp-for="SupplierName" asp-items="Model.Suppliers" class="select"></select>
+                        <span asp-validation-for="SupplierName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="Currency">Moneda:</label>
+                        <select asp-for="Currency" asp-items="Model.Currencies" class="select"></select>
+                        <span asp-validation-for="Currency" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="VatRequired">Requiere I.V.A.?:</label>
+                        <input type="checkbox" asp-for="VatRequired" id="IsAdministrator" value="true" class="form-check-input-styled" />
+                        <span asp-validation-for="VatRequired" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="SendTo">Enviar a:</label>
+                        <select asp-for="SendTo" asp-items="Model.Bases" class="select"></select>
+                        <span asp-validation-for="SendTo" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="Condition">Condiciones de Pago:</label>
+                        <input type="text" asp-for="Condition" class="form-control" placeholder="Condiciones">
+                        <span asp-validation-for="Condition" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="DeliveryTime">Tiempo de Entrega de Materiales:</label>
+                        <input type="text" asp-for="DeliveryTime" class="form-control" placeholder="Tiempo de entrega de Materiales">
+                        <span asp-validation-for="DeliveryTime" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="Remarks">Comentarios Adicionales:</label>
+                        <textarea asp-for="Remarks" class="form-control"></textarea>
+                        <span asp-validation-for="Remarks" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-12 text-right">
+                    <button type="submit" id="btnSubmit" class="btn bg-setin btn-labeled btn-labeled-right">Crear Orden <b><i class="icon-add"></i></b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".select").select2({
+            tags: true,
+            tokenSeparators: [',']
+        });
+
+        $('.form-check-input-styled').uniform();
+
+        $('#VatRequired').change(function () {
+            if ($(this).is(':checked')) {
+                $('#VatRequired').val(true);
+            }
+            else {
+                $('#VatRequired').val(false);
+            }
+        });
+    });
+</script>

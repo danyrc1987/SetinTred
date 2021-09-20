@@ -1,0 +1,257 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.CustomerQuoteDetailViewModel
+@{
+    ViewData["Title"] = "Configurar Cotización";
+    Layout = "_MasterSite";
+}
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Configurar Cotizacion: @Model.QuoteCode, Creada por: @Model.VendorName</h5>
+        <div class="header-elements">
+            <div class="btn-group">
+                <a asp-controller="Sales" asp-action="CreateItemQuote" asp-route-id="@Model.QuoteKey"  class="btn bg-setin btn-icon"><i class="icon-googleplus5"></i>   &nbsp;Agregar Item's</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Codigo Cotización:</label>
+                        <input type="text" class="form-control" asp-for="QuoteCode" disabled="disabled">
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="CustomerName">Cliente:</label>
+                        <input type="text" asp-for="CustomerName" class="form-control" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Moneda:</label>
+                        <input type="text" asp-for="CurrencyName" class="form-control" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Tipo de Cotización:</label>
+                        <input type="text" asp-for="QuoteType" class="form-control" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Metodo de Pago:</label>
+                            <input type="text" asp-for="PaymentType" class="form-control" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="font-weight-bold">Vigencia:</label>
+                        <input type="text" asp-for="Validity" class="form-control" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="TechnicalData">Datos Técnicos | Operativos:</label>
+                        <input type="text" asp-for="TechnicalData" class="form-control" placeholder="Datos Técnicos" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="LegalDocumentation">Documentación Legal:</label>
+                        <input type="text" asp-for="LegalDocumentation" class="form-control" placeholder="Documentación Legal" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="NormativeData">Datos Normativos:</label>
+                        <input type="text" asp-for="NormativeData" class="form-control" placeholder="Datos Normativos" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="ManufacturingStandard">Estándares de fabricación:</label>
+                        <input type="text" asp-for="ManufacturingStandard" class="form-control" placeholder="Estándares de fabricación" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="QualityProcess">Procesos de Calidad:</label>
+                        <input type="text" asp-for="QualityProcess" class="form-control" placeholder="Procesos de Calidad" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="Warranty">Garantía:</label>
+                        <input type="text" asp-for="Warranty" class="form-control" placeholder="Garantía" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold" asp-for="DeliveryTime">Tiempo de Entrega:</label>
+                        <input type="text" asp-for="DeliveryTime" class="form-control" placeholder="Tiempo de Entrega" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font-weight-bold">L.A.B.:</label>
+                        <input type="text" asp-for="Lab" class="form-control" disabled="disabled">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.Items.Any())
+{
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title font-weight-bold">Detalle Cotización</h5>
+            <div class="header-elements">
+                <div class="btn-group">
+                    <a title="Enviar a Aprobación" href="javascript:void(0)" data-toggle="modal" data-target="#aproveDialog" class="btn bg-setin btn-icon sendApprove" data-id="@Model.QuoteKey" data-name="@Model.QuoteKey"><i class="icon-paperplane"></i>   &nbsp;Enviar a Aprobación</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body"></div>
+        <table class="table table-hover datatable-responsive">
+            <thead>
+                <tr>
+                    <th>Partida</th>
+                    <th>Cantidad</th>
+                    <th>Unidad</th>
+                    <th>Descripcion</th>
+                    <th>Disponibilidad</th>
+                    <th>Alcance</th>
+                    <th>Notas</th>
+                    <th>Precio Unitario</th>
+                    <th>Importe</th>
+                    <th class="text-center">Opciones</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Consecutive</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Unit</td>
+                    <td>@item.Description</td>
+                    <td>@item.Availability</td>
+                    <td>@item.Scope</td>
+                    <td>@item.Remarks</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@item.SubTotal.ToString("C2")</td>
+                    <td class="text-center">
+                        <div class="list-icons">
+                            <div class="dropdown">
+                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                    <i class="icon-menu9"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a asp-controller="Sales" asp-action="DeleteItemQuote" asp-route-id="@item.Key" class="dropdown-item"><i class="icon-cross3"></i> Eliminar Item</a>
+                                    <a asp-controller="Sales" asp-action="EditItemQuote" asp-route-id="@item.Key" class="dropdown-item"><i class="icon-pencil7"></i> Editar Item</a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="10" class="text-right">
+                    <strong>Gran Total: @Model.Items.Sum(x=>x.SubTotal).ToString("C2")</strong>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+}
+<div class="modal fade" id="positionFormModel" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5 class="modal-title"></h5>
+            </div>
+
+            <div class="modal-body">
+                <div id="positionFormModelDiv"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="aproveDialog" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelCancel">Deseas enviar a aprobación esta cotización?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="btnYesCancel">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section PageCrumb{
+    <span class="breadcrumb-item">Ventas</span>
+    <span class="breadcrumb-item">Cotizaciones</span>
+    <span class="breadcrumb-item active">Configuirar Cotización</span>
+}
+@section CustomScripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+
+    <script src="~/js/DetailItemsQuote.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+
+            var item_to_cancel;
+            $('.sendApprove').click((e) => {
+                debugger;
+                item_to_cancel = e.currentTarget.dataset.id;
+            });
+
+            $("#btnYesCancel").click(function () {
+
+                var comments = $('#commets').val();
+                var model = { Id: item_to_cancel, Comments: comments };
+                $.ajax({
+                    type: "POST",
+                    url: "/Sales/SendToValidateQuote",
+                    data: model,
+                    success: function (result) {
+                        window.location.href = '/Sales/CustomerQuotesList';
+                    },
+                    error: function (result) {
+                        alert(result.responseText);
+                    }
+                });
+            });
+
+        });
+
+
+
+    </script>
+}

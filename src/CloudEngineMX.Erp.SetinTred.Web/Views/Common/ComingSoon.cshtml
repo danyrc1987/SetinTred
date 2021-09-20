@@ -1,0 +1,20 @@
+
+@{
+    ViewData["Title"] = "Proximamente...";
+    Layout = "_MasterSite";
+}
+<div class="row">
+    <div class="col-md-12">
+        <img src="~/global_assets/images/4.jpg" alt="proximamente" class="img-fluid"/>
+    </div>
+</div>
+@section CustomScripts{
+    <script>
+        $(document).ready(function() {
+            $("[id=principal-menu]").hide();
+            $("[id=header-principal]").hide();
+            $("[id=principal-statics]").hide();
+        })
+    </script>
+}
+

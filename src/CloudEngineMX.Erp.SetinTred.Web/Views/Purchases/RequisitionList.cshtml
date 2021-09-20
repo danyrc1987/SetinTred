@@ -1,0 +1,311 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.RequisitionsListViewModel
+@{
+    ViewData["Title"] = "Lista de Requisiciones";
+    Layout = "_MasterSite";
+}
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Nueva Requisición</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-controller="Purchases" asp-action="CreateRequisition" method="post">
+                    <input type="hidden" asp-for="Key" />
+                    <input type="hidden" asp-for="Action" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="CreationDate">Fecha Requisición:</label>
+                                <input type="text" asp-for="CreationDate" class="form-control" placeholder="Fecha Requsicion" disabled="disabled">
+                                <span asp-validation-for="CreationDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="AreaKey">Área:</label>
+                                <select asp-for="AreaKey" asp-items="Model.Areas" class="select"></select>
+                                <span asp-validation-for="AreaKey" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="OperatingBaseKey">Base Operativa:</label>
+                                <select asp-for="OperatingBaseKey" asp-items="Model.OperatingBases" class="select"></select>
+                                <span asp-validation-for="OperatingBaseKey" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Classification">Clasificación:</label>
+                                <select asp-for="Classification" asp-items="Model.Classifications" class="select"></select>
+                                <span asp-validation-for="Classification" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="CostCenter">Centro de Costos:</label>
+                                <select asp-for="CostCenter" asp-items="Model.CostCenters" class="select"></select>
+                                <span asp-validation-for="CostCenter" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="Application">Aplicación:</label>
+                                <input type="text" asp-for="Application" class="form-control" placeholder="Aplicación" >
+                                <span asp-validation-for="Application" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="font-weight-bold" asp-for="KeyDescription">Descripción Clave:</label>
+                                <input type="text" asp-for="KeyDescription" class="form-control" placeholder="Descripción">
+                                <span asp-validation-for="KeyDescription" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn bg-success btn-labeled btn-labeled-right">@Model.Action Requisición <b><i class="icon-add"></i></b></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="~/global_assets/images/principal.jpg" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Lista de Requisiciones</h5>
+    </div>
+    <div class="card-body">
+    </div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+            <tr>
+                <th>Código Requisición</th>
+                <th>Fecha Requisición</th>
+                <th>Área</th>
+                <th>Solicitante</th>
+                <th>Centro de Costos</th>
+                <th>Descripción Clave</th>
+                <th>Base Operativa</th>
+                <th>Estatus</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Requisitions)
+            {
+            <tr>
+                <td>@item.RequisitionCode</td>
+                <td>@item.CreationDate.ToShortDateString()</td>
+                <td>@item.AreaName</td>
+                <td>@item.UserName</td>
+                <td>@item.CostCenter</td>
+                <td>@item.KeyDescription</td>
+                <td>@item.OperatingBaseName</td>
+                <td>@item.Status</td>
+                <td class="text-center">
+                    <div class="list-icons">
+                        <div class="dropdown">
+                            <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                <i class="icon-menu9"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                @if (item.Status.Equals("Requisición Creada"))
+                                    {
+                                <a asp-controller="Purchases" asp-action="ConfigureRequisition" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-cog3"></i> Configurar</a>
+                                    }
+                                <a asp-controller="Purchases" asp-action="DetailRequisition" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-file-text"></i> Detalles</a>
+                                @if (User.FindFirst("AreaName").Value == "Compras")
+                                    {
+                                        @*<a asp-controller="Purchases" asp-action="DetailRequisition" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-file-text"></i> Detalles</a>*@
+                                        <a href="javascript:void(0)" data-id="@item.RequisitionKey" data-toggle="modal" data-target="#cancelDialog" class="dropdown-item cancelRequest"><i class="icon-cancel-circle2"></i> Cancelar</a>
+
+                                @if (item.Status.Equals("Requiere de Compras") || item.Status.Equals("Existencia Parcial"))
+                                        {
+                                <a asp-controller="Purchases" asp-action="ConfigureToApprobation" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-file-check"></i> Validar y Enviar a Aprobación</a>
+                                        }
+                                    }
+
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Lista de Requisiciones Para Aprobar</h5>
+    </div>
+    <div class="card-body">
+    </div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+        <tr>
+            <th>Código Requisición</th>
+            <th>Fecha Requisición</th>
+            <th>Área</th>
+            <th>Solicitante</th>
+            <th>Centro de Costos</th>
+            <th>Descripción Clave</th>
+            <th>Base Operativa</th>
+            <th>Estatus</th>
+            <th>Opciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.RequisitionsForApprove)
+        {
+            <tr>
+                <td>@item.RequisitionCode</td>
+                <td>@item.CreationDate.ToShortDateString()</td>
+                <td>@item.AreaName</td>
+                <td>@item.UserName</td>
+                <td>@item.Application</td>
+                <td>@item.KeyDescription</td>
+                <td>@item.OperatingBaseName</td>
+                <td>@item.Status</td>
+                <td class="text-center">
+                    <div class="list-icons">
+                        <div class="dropdown">
+                            <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                <i class="icon-menu9"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                @if (item.Status.Equals("Requisición Creada"))
+                                {
+                                    <a asp-controller="Purchases" asp-action="ConfigureRequisition" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-cog3"></i> Configurar</a>
+                                }
+                                <a asp-controller="Purchases" asp-action="DetailRequisition" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-file-text"></i> Detalles</a>
+                                <a asp-controller="Purchases" asp-action="DetailToAprobe" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-file-check"></i> Aprobar</a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="cancelDialog" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelCancel">Rechazar Requisición</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <textarea id="commets" placeholder="Ingresa tus comentarios" class="form-control"></textarea>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="btnYesCancel">Rechazar Requisición</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section PageCrumb{
+    <span class="breadcrumb-item">Compras</span>
+    <span class="breadcrumb-item active">Requisiciones</span>
+}
+@section CustomScripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/pickadate/picker.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+
+    <script src="~/js/RequsitionsList.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+
+            //Cancel Mission
+            var item_to_cancel;
+            $('.cancelRequest').click((e) => {
+                debugger;
+                item_to_cancel = e.currentTarget.dataset.id;
+            });
+
+            $("#btnYesCancel").click(function () {
+
+                var comments = $('#commets').val();
+                var model = { Id: item_to_cancel, Comments: comments };
+                $.ajax({
+                    type: "POST",
+                    url: "/Purchases/RejectPurchase",
+                    data: model,
+                    success: function (result) {
+                        window.location.href = '/Purchases/RequisitionList';
+                    },
+                    error: function (result) {
+                        alert(result.responseText);
+                    }
+                });
+            });
+
+
+            var date = new Date(Date.now());
+            var pickr = $("#NextScheduledEvaluation").pickadate({
+                monthsFull: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+                weekdaysShort: ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'],
+                formatSubmit: 'dd-mm-yyyy',
+                format: "dd/mm/yyyy",
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 5,
+                editable: true,
+                today: 'Hoy',
+                clear: 'Limpiar',
+                close: 'Cerrar'
+            });
+
+
+            $('#NextScheduledEvaluation').click(function () {
+                pickr.pickadate('open');
+            });
+
+        });
+
+        $('.form-check-input-styled').uniform();
+
+        $('#IsCritical').change(function () {
+            if ($(this).is(':checked')) {
+                $('#RequiredQuote').val(true);
+            }
+            else {
+                $('#RequiredQuote').val(false);
+            }
+        });
+
+    </script>
+}
+
+

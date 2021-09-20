@@ -1,0 +1,31 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.DetailInventoryViewModel
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Stock Disponible</h5>
+    </div>
+    <div class="card-body">
+    </div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+        <tr>
+            <th>Codigo</th>
+            <th>Serie</th>
+            <th>Resolucion</th>
+            <th>Fecha Calibracion</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Inventories)
+        {
+            <tr>
+                <td>@item.Code</td>
+                <td>@item.Serial</td>
+                <td>@item.Resolution</td>
+                <td>@(item.DateOfCalibration != null ? item.DateOfCalibration.Value.ToShortDateString() : "-")</td>
+                <td>@item.State</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

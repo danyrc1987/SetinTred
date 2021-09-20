@@ -1,0 +1,202 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.UserViewModel
+@{
+    ViewData["Title"] = "Lista de Usuarios";
+    Layout = "_MasterSite";
+}
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">Nuevo Usuario</h5>
+            <div class="header-elements">
+                <div class="list-icons">
+                    <a class="list-icons-item" data-action="collapse"></a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <form asp-controller="Administrator" asp-action="CreateUser" method="post">
+                        <input type="hidden" asp-for="UserKey" />
+                        <input type="hidden" asp-for="Action" />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="FirstName">Nombre (s):</label>
+                                    <input type="text" asp-for="FirstName" class="form-control" placeholder="Nombre (s)">
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="LastName">Apellido (s):</label>
+                                    <input type="text" asp-for="LastName" class="form-control" placeholder="Apellidos">
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="Email">Correo Electronico:</label>
+                                    <input type="email" asp-for="Email" class="form-control" placeholder="Correo Electronico">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="UserReportKey">Responsable:</label>
+                                    <select asp-for="UserReportKey" asp-items="Model.UserReports" class="select"></select>
+                                    <span asp-validation-for="UserReportKey" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" asp-for="AreaKey">Area:</label>
+                                    <select asp-for="AreaKey" asp-items="Model.Areas" class="select"></select>
+                                    <span asp-validation-for="AreaKey" class="text-danger"></span>
+                                </div>
+                            </div>
+                            @if (Model.Action == "Crear")
+                            {
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" asp-for="IsAdministrator">Es Administrador?:</label>
+                                        <input type="checkbox" asp-for="IsAdministrator" id="IsAdministrator" value="true" class="form-check-input-styled" />
+                                        <span asp-validation-for="IsAdministrator" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="col-md-12 text-right">
+                                <button type="submit" class="btn bg-success btn-labeled btn-labeled-right">@Model.Action Usuario <b><i class="icon-add"></i></b></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img src="~/global_assets/images/principal.jpg" class="img-fluid" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Lista de Usuarios</h5>
+    </div>
+    <div class="card-body">
+    </div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+        <tr>
+            <th>Nombre (s)</th>
+            <th>Apeliido (s)</th>
+            <th>Area</th>
+            <th>Email</th>
+            <th>Estado</th>
+            <th>Opciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.UserViewModels)
+        {
+            <tr>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.AreaName</td>
+                <td>@item.Email</td>
+                <td>
+                    @if (item.IsActive)
+                    {
+                        <span class="badge badge-success">Activo</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-light">Inactivo</span>
+                    }
+                </td>
+                <td class="text-center">
+                    <div class="list-icons">
+                        <div class="dropdown">
+                            <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                <i class="icon-menu9"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a asp-controller="Administrator" asp-action="EditUser" asp-route-id="@item.UserKey" class="dropdown-item"><i class="icon-pencil7"></i> Editar</a>
+                                <a class="dropdown-item addQuotation" data-id="@item.UserKey" data-name="@item.UserKey"><i class="icon-pencil7"></i> Cambiar Contraseña</a>
+                                @if (@item.IsActive)
+                                {
+                                    <a asp-controller="Administrator" asp-action="DesactiveUser" asp-route-id="@item.UserKey" class="dropdown-item"><i class="icon-user-block"></i> Desactivar</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Administrator" asp-action="DesactiveUser" asp-route-id="@item.UserKey" class="dropdown-item"><i class="icon-user-check"></i> Activar</a>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+        }
+        </tbody>
+    </table>
+
+</div>
+<div class="modal fade" id="quotationFormModel" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cambiar Contraseña</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div id="quotationFormModelDiv"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section PageCrumb{
+    <span class="breadcrumb-item">Administracion</span>
+    <span class="breadcrumb-item active">Usuarios</span>
+}
+@section CustomScripts{
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+    <script src="~/js/UserList.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+        });
+
+        $('.form-check-input-styled').uniform();
+
+        $('#IsAdministrator').change(function () {
+            if ($(this).is(':checked')) {
+                $('#IsAdministrator').val(true);
+            }
+            else {
+                $('#IsAdministrator').val(false);
+            }
+        });
+
+        $(".addQuotation").click(function() {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var url = "/Administrator/ChangePassword/" + id;
+            debugger;
+            $("#quotationFormModelDiv").load(url, function () {
+                $("#quotationFormModel").modal("show");
+            });
+        });
+
+    </script>
+}
+

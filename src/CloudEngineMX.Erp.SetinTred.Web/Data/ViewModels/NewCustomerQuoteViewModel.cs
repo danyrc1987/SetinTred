@@ -1,0 +1,25 @@
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels
+{
+    public class NewCustomerQuoteViewModel
+    {
+        public string CustomerId { get; set; }
+        public string CurrencyKey { get; set; }
+        public string LegalDocumentation { get; set; }
+        public string TechnicalData { get; set; }
+        public string NormativeData { get; set; }
+        public string ManufacturingStandard { get; set; }
+        public string QualityProcess { get; set; }
+        public string Validity { get; set; }
+        public string QuoteType { get; set; }
+        public string PaymentType { get; set; }
+        public string Warranty { get; set; }
+        public string DeliveryTime { get; set; }
+        public string Lab { get; set; }
+
+        public IEnumerable<SelectListItem> Customers { get; set; }
+        public IEnumerable<SelectListItem> Currencies { get; set; }
+    }
+}

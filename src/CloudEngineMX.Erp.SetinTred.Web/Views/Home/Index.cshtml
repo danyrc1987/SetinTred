@@ -1,0 +1,134 @@
+@{
+    Layout = "_MasterSite";
+    ViewData["Title"] = "Home Page";
+}
+<br/>
+<div class="text-center">
+    <img width="350" src="global_assets/images/Logo-Setin-Tred.png" alt="SetinTred"/>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-setin text-center">
+                <h6 class="card-title font-weight-bold">ALTA GERENCIA</h6>
+            </div>
+            <div class="card-body" style="padding: 0">
+                <a href="@Url.Action("Index","GeneralDirection")" title="Alta gerencia"><img class="img-fluid" src="global_assets/images/gerencia.png" alt="gerencia" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-setin text-center">
+                <h6 class="card-title font-weight-bold">COMPRAS</h6>
+            </div>
+            <div class="card-body" style="padding: 0">
+                <a href="@Url.Action("Index","Purchases")" title="Compras"><img class="img-fluid" src="global_assets/images/compras.png" alt="compras" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-setin text-center">
+                <h6 class="card-title font-weight-bold">VENTAS Y SERVICIO</h6>
+            </div>
+            <div class="card-body" style="padding: 0">
+                <a href="@Url.Action("Index","Warehouse")" title="Ventas y Servicio"><img class="img-fluid" src="global_assets/images/ventas.png" alt="ventas" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-setin text-center">
+                <h6 class="card-title font-weight-bold">RECURSOS HUMANOS</h6>
+            </div>
+            <div class="card-body" style="padding: 0">
+                <a href="@Url.Action("Index","Warehouse")" title="Recursos Humanos"><img class="img-fluid" src="global_assets/images/recursos-humanos.png" alt="recursos" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-setin text-center">
+                <h6 class="card-title font-weight-bold">INGENIERIA DE PRODUCTO</h6>
+            </div>
+            <div class="card-body" style="padding: 0">
+                <a href="@Url.Action("Index","Warehouse")" title="Ingenieria de Producto"><img class="img-fluid" src="global_assets/images/ingenieria.png" alt="ingenieria" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-setin text-center">
+                <h6 class="card-title font-weight-bold">QHSE</h6>
+            </div>
+            <div class="card-body" style="padding: 0">
+                <a href="@Url.Action("Index","Warehouse")" title="QHSE"><img class="img-fluid" src="global_assets/images/calidad.png" alt="qhse" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-setin text-center">
+                <h6 class="card-title font-weight-bold">LABORATORIO</h6>
+            </div>
+            <div class="card-body" style="padding: 0">
+                <a href="@Url.Action("Index","Laboratory")" title="Laboratorio"><img class="img-fluid" src="global_assets/images/laboratorio.png" alt="laboratorio" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-setin text-center">
+                <h6 class="card-title font-weight-bold">SEGURIDAD</h6>
+            </div>
+            <div class="card-body" style="padding: 0">
+                <a href="@Url.Action("Index","Warehouse")" title="Seguridad"><img class="img-fluid" src="global_assets/images/seguridad.png" alt="seguridad" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-setin text-center">
+                <h6 class="card-title font-weight-bold">ALMACEN</h6>
+            </div>
+            <div class="card-body" style="padding: 0">
+                <a href="@Url.Action("Index","Warehouse")" title="Almacen"><img class="img-fluid" src="global_assets/images/almacen.png" alt="almacen" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-setin text-center">
+                <h6 class="card-title font-weight-bold">FINANZAS Y CONTABILIDAD</h6>
+            </div>
+            <div class="card-body" style="padding: 0">
+                <a href="@Url.Action("Index","Warehouse")" title="Finanzas y Contabilidad"><img class="img-fluid" src="global_assets/images/finanzas.png" alt="finanzas" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-setin text-center">
+                <h6 class="card-title font-weight-bold">PRODUCCIÓN</h6>
+            </div>
+            <div class="card-body" style="padding: 0">
+                <a href="@Url.Action("Index","Warehouse")" title="Produccion"><img class="img-fluid" src="global_assets/images/produccion.png" alt="produccion" /></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PageCrumb{
+}
+
+@section CustomScripts{
+    <script>
+        $(document).ready(function() {
+            $("[id=principal-menu]").hide();
+            $("[id=header-principal]").hide();
+            $("[id=principal-statics]").hide();
+        })
+    </script>
+}

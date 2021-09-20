@@ -1,0 +1,149 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.RequisitionsListViewModel
+@{
+    ViewData["Title"] = "Requisiciones En Espera de Aprobacion";
+    Layout = "_MasterSite";
+}
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Lista de Requisiciones</h5>
+    </div>
+    <div class="card-body">
+    </div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+            <tr>
+                <th>Código Requisición</th>
+                <th>Fecha Requisición</th>
+                <th>Área</th>
+                <th>Solicitante</th>
+                <th>Centro de Costos</th>
+                <th>Descripción Clave</th>
+                <th>Base Operativa</th>
+                <th>Estatus</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Requisitions)
+            {
+                <tr>
+                    <td>@item.RequisitionCode</td>
+                    <td>@item.CreationDate.ToShortDateString()</td>
+                    <td>@item.AreaName</td>
+                    <td>@item.UserName</td>
+                    <td>@item.CostCenter</td>
+                    <td>@item.KeyDescription</td>
+                    <td>@item.OperatingBaseName</td>
+                    <td>@item.Status</td>
+                    <td class="text-center">
+                        <div class="list-icons">
+                            <div class="dropdown">
+                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                    <i class="icon-menu9"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a asp-controller="Purchases" asp-action="DetailRequisition" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-file-text"></i> Detalles</a>
+                                    @*<a asp-controller="Purchases" asp-action="ReactiveRequest" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-checkmark4"></i> Reactivar</a>*@
+
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section PageCrumb{
+    <span class="breadcrumb-item">Compras</span>
+    <span class="breadcrumb-item">Requisiciones</span>
+    <span class="breadcrumb-item active">Requisiciones Canceladas</span>
+}
+@section CustomScripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/pickadate/picker.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+
+    <script src="~/js/RequsitionsList.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+
+            //Cancel Mission
+            var item_to_cancel;
+            $('.cancelRequest').click((e) => {
+                debugger;
+                item_to_cancel = e.currentTarget.dataset.id;
+            });
+
+            $("#btnYesCancel").click(function () {
+
+                var comments = $('#commets').val();
+                var model = { Id: item_to_cancel, Comments: comments };
+                $.ajax({
+                    type: "POST",
+                    url: "/Purchases/RejectPurchase",
+                    data: model,
+                    success: function (result) {
+                        window.location.href = '/Purchases/RequisitionList';
+                    },
+                    error: function (result) {
+                        alert(result.responseText);
+                    }
+                });
+            });
+
+
+            var date = new Date(Date.now());
+            var pickr = $("#NextScheduledEvaluation").pickadate({
+                monthsFull: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+                weekdaysShort: ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'],
+                formatSubmit: 'dd-mm-yyyy',
+                format: "dd/mm/yyyy",
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 5,
+                editable: true,
+                today: 'Hoy',
+                clear: 'Limpiar',
+                close: 'Cerrar'
+            });
+
+
+            $('#NextScheduledEvaluation').click(function () {
+                pickr.pickadate('open');
+            });
+
+        });
+
+        $('.form-check-input-styled').uniform();
+
+        $('#IsCritical').change(function () {
+            if ($(this).is(':checked')) {
+                $('#RequiredQuote').val(true);
+            }
+            else {
+                $('#RequiredQuote').val(false);
+            }
+        });
+
+    </script>
+}
+
+
+
+@{
+    ViewData["Title"] = "RequisitionListPending";
+    Layout = "~/Views/Shared/_MasterSite.cshtml";
+}
+
+<h1>RequisitionListPending</h1>
+

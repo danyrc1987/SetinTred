@@ -1,0 +1,75 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.RequisitionsListViewModel
+@{
+    ViewData["Title"] = "Despacho Requsiciones";
+    Layout = "_MasterSite";
+}
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Lista de Requisiciones Para Aprobar</h5>
+    </div>
+    <div class="card-body">
+    </div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+            <tr>
+                <th>Código Requisición</th>
+                <th>Fecha Requisición</th>
+                <th>Area</th>
+                <th>Solicitante</th>
+                <th>Base Operativa</th>
+                <th>Estatus</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Requisitions)
+            {
+                <tr>
+                    <td>@item.RequisitionCode</td>
+                    <td>@item.CreationDate</td>
+                    <td>@item.AreaName</td>
+                    <td>@item.UserName</td>
+                    <td>@item.OperatingBaseName</td>
+                    <td>@item.Status</td>
+
+                    <td class="text-center">
+                        <div class="list-icons">
+                            <div class="dropdown">
+                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                    <i class="icon-menu9"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    @*<a asp-controller="Warehouse" asp-action="DetailRequisition" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-file-text"></i> Detalles</a>*@
+                                    <a asp-controller="Warehouse" asp-action="FillOrder" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-file-check"></i> Validar y Aprobar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section PageCrumb{
+    <span class="breadcrumb-item">Almacen</span>
+    <span class="breadcrumb-item active">Requisiciones</span>
+}
+@section CustomScripts{
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+
+    <script src="~/js/RequsitionsListWarehouse.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+    </script>
+}
+
+

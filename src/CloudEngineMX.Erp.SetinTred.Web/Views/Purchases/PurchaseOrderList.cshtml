@@ -1,0 +1,175 @@
+@using CloudEngineMX.Erp.SetinTred.Web.Data
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.PurchaseOrdersViewModel
+@{
+    ViewData["Title"] = "Ordenes de Compra";
+    Layout = "_MasterSite";
+}
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title font-weight-bold">Lista de Requisiciones Autorizadas</h5>
+    </div>
+    <div class="card-body"></div>
+    <table class="table table-hover datatable-responsiveBiz">
+        <thead>
+        <tr>
+            <th>Código Requisición</th>
+            <th>Fecha Requisición</th>
+            <th>Área</th>
+            <th>Solicitante</th>
+            <th>Descripción Clave</th>
+            <th>Base Operativa</th>
+            <th>Estatus</th>
+            <th>Opciones</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Requisitions)
+            {
+                <tr>
+                    <td>@item.RequisitionCode</td>
+                    <td>@item.CreationDate.ToShortDateString()</td>
+                    <td>@item.AreaName</td>
+                    <td>@item.UserName</td>
+                    <td>@item.KeyDescription</td>
+                    <td>@item.OperatingBaseName</td>
+                    <td>@item.Status</td>
+                    <td class="text-center">
+                        <div class="list-icons">
+                            <div class="dropdown">
+                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                    <i class="icon-menu9"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+
+                                    <a asp-controller="Purchases" asp-action="DetailRequisition" asp-route-id="@item.RequisitionKey" class="dropdown-item"><i class="icon-file-text"></i> Detalles</a>
+                                    <a href="javascript:void(0)" data-id="@item.RequisitionKey" class="dropdown-item addOrder"><i class="icon-cart-add"></i> Crear I.C.</a>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+</table>
+</div>
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title font-weight-bold">Lista de instrucciones de Compra</h5>
+        @*<div class="header-elements">
+            <div class="btn-group">
+                <a class="btn bg-setin btn-icon addOrder" style="cursor: pointer"><i class="icon-googleplus5"></i>   &nbsp;Nueva Orden de Compra</a>
+            </div>
+        </div>*@
+    </div>
+    <div class="card-body"></div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+            <tr>
+                <th>Código Instrucción</th>
+                <th>Fecha Solicitud</th>
+                <th>Solicitante</th>
+                <th>Código Requisición</th>
+                <th>Descripción Clave</th>
+                <th>Proveedor</th>
+                <th>Base Operativa</th>
+                <th class="text-center">Estado</th>
+                <th class="text-center">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Orders)
+            {
+                <tr>
+                    <td>@item.PurchaseOrderCode</td>
+                    <td>@item.CreationDate.ToShortDateString()</td>
+                    <td>@item.UserName</td>
+                    <td>@item.RequisitionCode</td>
+                    <td>@item.KeyDescription</td>
+                    <td>@item.SupplierName</td>
+                    <td>@item.OperatingBaseName</td>
+                    <td class="text-center">
+                        @if (item.Status == "Rechazada por D.G.")
+                        {
+                        <span class="badge badge-danger">@item.Status</span>
+                        }
+                        else if (item.Status == "Aprobada")
+                        {
+                    <span class="badge badge-success">@item.Status</span>
+                        }
+                        else if (item.Status == "Espera Aprobacion")
+                        {
+                            <span class="badge badge-warning">@item.Status</span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        <div class="list-icons">
+                            <div class="dropdown">
+                                <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                    <i class="icon-menu9"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    @if (item.Status == "Creada")
+                                    {
+                                    <a asp-controller="Purchases" asp-action="ConfigureOrder" asp-route-id="@item.PurchaseOrderKey" class="dropdown-item "><i class="icon-design"></i> Configurar Instrucción</a>
+                                    }
+                                    @if (item.Status == Constants.PurchaseOrderComplete && item.WithApprovedDetails)
+                                    {
+                                        <a href="https://api.cloudengine.com.mx/api/reports/PurchaseOrder?orderKey=@item.PurchaseOrderKey" class="dropdown-item "><i class="icon-file-download2"></i> Descargar</a>
+                                    }
+                                    <a asp-controller="Purchases" asp-action="PurchaseOrderDetail" asp-route-id="@item.PurchaseOrderKey" class="dropdown-item "><i class="icon-file-text"></i> Detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="positionFormModel" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Crear Orden de Compra</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div id="positionFormModelDiv"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section PageCrumb{
+    <span class="breadcrumb-item">Compras</span>
+    <span class="breadcrumb-item active">Instrucciones de Compra</span>
+}
+@section CustomScripts{
+    <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="~/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+
+    <script src="~/js/PurchaseOrderListPurchase.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".select").select2({
+                tags: false,
+                tokenSeparators: [',']
+            });
+
+            $(".addOrder").click(function() {
+                var $buttonClicked = $(this);
+                var url = "/Purchases/CreatePurchaseOrder";
+                debugger;
+                $("#positionFormModelDiv").load(url,
+                    function() {
+                        $("#positionFormModel").modal("show");
+                    });
+            });
+        });
+    </script>
+}

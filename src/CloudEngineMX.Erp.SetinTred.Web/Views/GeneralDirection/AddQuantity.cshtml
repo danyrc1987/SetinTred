@@ -1,0 +1,19 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.PurchaseOrderDetailViewModel
+<div class="col-md-12">
+    <form method="post" asp-controller="GeneralDirection" asp-action="UpdateItem">
+        <input type="hidden" asp-for="PurchaseOrderDetailKey" />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="font-weight-bold" asp-for="Quantity">Cantidad Solicitada:</label>
+                    <input type="text" asp-for="Quantity" class="form-control" placeholder="Cantidad">
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="col-md-12 text-right">
+                <button type="submit" id="btnSubmit" class="btn bg-setin btn-labeled btn-labeled-right">Modificar Cantidad <b><i class="icon-add"></i></b></button>
+            </div>
+        </div>
+    </form>
+</div>

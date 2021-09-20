@@ -1,0 +1,25 @@
+@model CloudEngineMX.Erp.SetinTred.Web.Data.ViewModels.ItemRequestViewModel
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Materiales Solicitados</h5>
+    </div>
+    <div class="card-body">
+    </div>
+    <table class="table table-hover datatable-responsive">
+        <thead>
+            <tr>
+                <th>Nombre Material</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.MaterialName</td>
+                    <td>@item.Quantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
