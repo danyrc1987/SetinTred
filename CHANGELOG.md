@@ -1,3 +1,7 @@
+## 1.1.2 (2021-09-20)
+
+
+
 ## [1.1.2](https://gitlab.com/cloud-engine-mexico/erp-setintred/compare/v1.1.1...v1.1.2) (2020-10-10)
 
 
